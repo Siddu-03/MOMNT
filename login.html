@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Momnt</title>
+    <link rel="stylesheet" href="login.css">
+    <!-- Google Fonts - Inter for modern, clean typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main container for centering and layout -->
+    <main class="login-container">
+        <!-- Background decoration elements -->
+        <div class="bg-decoration bg-decoration-1"></div>
+        <div class="bg-decoration bg-decoration-2"></div>
+        <div class="bg-decoration bg-decoration-3"></div>
+        
+        <!-- Login card/form section -->
+        <section class="login-card">
+            <!-- Brand header -->
+            <header class="login-header">
+                <h1 class="brand-logo">Momnt</h1>
+                <p class="login-subtitle">Welcome back! Sign in to your account</p>
+            </header>
+            
+            <!-- Main login form -->
+            <form class="login-form" id="loginForm" novalidate>
+                <!-- Email input group -->
+                <div class="input-group">
+                    <label for="email" class="input-label">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        class="form-input" 
+                        placeholder="Enter your email"
+                        aria-describedby="email-error"
+                        required
+                    >
+                </div>
+                
+                <!-- Password input group -->
+                <div class="input-group">
+                    <label for="password" class="input-label">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        class="form-input" 
+                        placeholder="Enter your password"
+                        aria-describedby="password-error"
+                        required
+                    >
+                </div>
+                
+                <!-- Error message container (hidden by default) -->
+                <div class="error-message" id="errorMessage" role="alert" aria-live="polite">
+                    <!-- Error text will be populated by JavaScript -->
+                </div>
+                
+                <!-- Submit button -->
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Sign In</span>
+                    <div class="btn-loading" id="btnLoading">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </button>
+            </form>
+            
+            <!-- Registration link -->
+            <footer class="login-footer">
+                <p class="register-link">
+                    Don't have an account? 
+                    <a href="register.html" class="register-link-anchor">Register here</a>
+                </p>
+            </footer>
+        </section>
+    </main>
+    
+    <!-- JavaScript for form handling -->
+    <script src="login.js"></script>
+</body>
+</html>

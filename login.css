@@ -1,0 +1,861 @@
+/* ===========================================
+   CSS RESET & BASE STYLES
+   =========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Startup Color Palette - Bold & Modern */
+    --primary-color: #6366f1;
+    --primary-hover: #5855eb;
+    --primary-dark: #4338ca;
+    --primary-light: #a5b4fc;
+    --primary-ultra-light: #e0e7ff;
+    --accent-color: #06b6d4;
+    --accent-hover: #0891b2;
+    --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    --gradient-accent: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --gradient-dark: linear-gradient(135deg, #2d3748 0%, #1a202c 100%);
+    
+    /* Advanced Color System */
+    --text-primary: #0f172a;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-inverse: #ffffff;
+    --background-primary: #ffffff;
+    --background-secondary: #f8fafc;
+    --background-elevated: #ffffff;
+    --border-color: #e2e8f0;
+    --border-focus: #6366f1;
+    --error-color: #ef4444;
+    --error-background: #fef2f2;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    
+    /* Advanced Shadows */
+    --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-glow: 0 0 20px rgba(99, 102, 241, 0.3);
+    --shadow-glow-accent: 0 0 30px rgba(6, 182, 212, 0.4);
+    
+    /* Typography - Modern & Bold */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    --font-family-display: 'Inter', system-ui, sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 1.875rem;
+    --font-size-4xl: 2.25rem;
+    --font-size-5xl: 3rem;
+    
+    /* Spacing System */
+    --spacing-px: 1px;
+    --spacing-0: 0;
+    --spacing-1: 0.25rem;
+    --spacing-2: 0.5rem;
+    --spacing-3: 0.75rem;
+    --spacing-4: 1rem;
+    --spacing-5: 1.25rem;
+    --spacing-6: 1.5rem;
+    --spacing-8: 2rem;
+    --spacing-10: 2.5rem;
+    --spacing-12: 3rem;
+    --spacing-16: 4rem;
+    --spacing-20: 5rem;
+    
+    /* Border Radius - Rounded & Modern */
+    --radius-none: 0;
+    --radius-sm: 0.125rem;
+    --radius-md: 0.375rem;
+    --radius-lg: 0.5rem;
+    --radius-xl: 0.75rem;
+    --radius-2xl: 1rem;
+    --radius-3xl: 1.5rem;
+    --radius-full: 9999px;
+    
+    /* Advanced Transitions */
+    --transition-all: all 0.15s ease;
+    --transition-fast: 0.1s ease;
+    --transition-normal: 0.2s ease;
+    --transition-slow: 0.3s ease;
+    --transition-bounce: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-elastic: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    
+    /* Z-Index Scale */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-fixed: 1030;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;
+    --z-tooltip: 1070;
+}
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: var(--gradient-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Advanced background with multiple layers */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(120, 219, 255, 0.2) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: -1;
+}
+
+/* ===========================================
+   ADVANCED ANIMATIONS
+   =========================================== */
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);
+        opacity: 0.7;
+    }
+    33% {
+        transform: translateY(-30px) rotate(120deg);
+        opacity: 0.9;
+    }
+    66% {
+        transform: translateY(15px) rotate(240deg);
+        opacity: 0.6;
+    }
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 40px rgba(99, 102, 241, 0.6);
+    }
+}
+
+@keyframes gradient-shift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes card-entrance {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* ===========================================
+   MAIN LAYOUT & CONTAINER
+   =========================================== */
+
+.login-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-6);
+    position: relative;
+    backdrop-filter: blur(10px);
+}
+
+/* Advanced background decoration elements */
+.bg-decoration {
+    position: absolute;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    pointer-events: none;
+    animation: float 8s ease-in-out infinite;
+}
+
+.bg-decoration::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 50%;
+    height: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: var(--radius-full);
+    transform: translate(-50%, -50%);
+}
+
+.bg-decoration-1 {
+    width: 300px;
+    height: 300px;
+    top: 5%;
+    left: -10%;
+    animation-delay: 0s;
+    background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%);
+}
+
+.bg-decoration-2 {
+    width: 250px;
+    height: 250px;
+    top: 50%;
+    right: -15%;
+    animation-delay: 3s;
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
+}
+
+.bg-decoration-3 {
+    width: 180px;
+    height: 180px;
+    bottom: 10%;
+    left: 15%;
+    animation-delay: 6s;
+    background: linear-gradient(135deg, rgba(245, 101, 101, 0.1) 0%, rgba(249, 115, 22, 0.1) 100%);
+}
+
+/* Additional smaller decorations */
+.bg-decoration-4 {
+    width: 120px;
+    height: 120px;
+    top: 20%;
+    right: 25%;
+    animation-delay: 2s;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(34, 197, 94, 0.1) 100%);
+}
+
+/* ===========================================
+   PREMIUM LOGIN CARD
+   =========================================== */
+
+.login-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-radius: var(--radius-3xl);
+    box-shadow: 
+        var(--shadow-2xl),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    padding: var(--spacing-12);
+    width: 100%;
+    max-width: 440px;
+    position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: card-entrance 0.6s ease-out;
+}
+
+.login-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.8), transparent);
+    border-radius: var(--radius-3xl) var(--radius-3xl) 0 0;
+}
+
+.login-card::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-3xl);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity var(--transition-slow);
+}
+
+.login-card:hover::after {
+    opacity: 0.1;
+}
+
+/* ===========================================
+   ENHANCED HEADER SECTION
+   =========================================== */
+
+.login-header {
+    text-align: center;
+    margin-bottom: var(--spacing-10);
+    position: relative;
+}
+
+.brand-logo {
+    font-family: var(--font-family-display);
+    font-size: var(--font-size-4xl);
+    font-weight: 800;
+    background: var(--gradient-primary);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-size: 200% 200%;
+    animation: gradient-shift 4s ease infinite;
+    margin-bottom: var(--spacing-3);
+    letter-spacing: -0.05em;
+    position: relative;
+}
+
+.brand-logo::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--gradient-accent);
+    border-radius: var(--radius-full);
+}
+
+.login-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    font-weight: 500;
+    margin-bottom: var(--spacing-2);
+}
+
+/* ===========================================
+   ADVANCED FORM LAYOUT
+   =========================================== */
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-6);
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-2);
+    position: relative;
+}
+
+.input-label {
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: var(--spacing-1);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ===========================================
+   PREMIUM INPUT FIELDS
+   =========================================== */
+
+.form-input {
+    width: 100%;
+    padding: var(--spacing-4) var(--spacing-5);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-base);
+    font-family: var(--font-family);
+    font-weight: 500;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    color: var(--text-primary);
+    transition: all var(--transition-normal);
+    outline: none;
+    position: relative;
+}
+
+.form-input::placeholder {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* Advanced input focus state with multiple effects */
+.form-input:focus {
+    border-color: var(--border-focus);
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 
+        0 0 0 4px rgba(99, 102, 241, 0.1),
+        var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.form-input:focus::placeholder {
+    color: transparent;
+}
+
+/* Input error state with enhanced styling */
+.form-input.error {
+    border-color: var(--error-color);
+    background: rgba(254, 242, 242, 0.8);
+    box-shadow: 
+        0 0 0 4px rgba(239, 68, 68, 0.1),
+        var(--shadow-md);
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+}
+
+/* ===========================================
+   ENHANCED ERROR MESSAGES
+   =========================================== */
+
+.error-message {
+    background: linear-gradient(135deg, var(--error-background) 0%, rgba(254, 242, 242, 0.8) 100%);
+    color: var(--error-color);
+    padding: var(--spacing-4) var(--spacing-5);
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(-15px) scale(0.95);
+    transition: all var(--transition-bounce);
+    border-left: 4px solid var(--error-color);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    box-shadow: var(--shadow-md);
+}
+
+.error-message.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.error-message::before {
+    content: '⚠️';
+    margin-right: var(--spacing-2);
+}
+
+/* ===========================================
+   PREMIUM BUTTONS
+   =========================================== */
+
+.login-btn {
+    width: 100%;
+    padding: var(--spacing-5) var(--spacing-6);
+    background: var(--gradient-primary);
+    background-size: 200% 200%;
+    color: var(--text-inverse);
+    border: none;
+    border-radius: var(--radius-xl);
+    font-size: var(--font-size-lg);
+    font-weight: 700;
+    font-family: var(--font-family);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.login-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left var(--transition-slow);
+}
+
+.login-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-xl), var(--shadow-glow);
+    background-position: right center;
+}
+
+.login-btn:hover::before {
+    left: 100%;
+}
+
+.login-btn:active {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-lg);
+}
+
+.login-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.login-btn:disabled:hover {
+    transform: none;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Enhanced button loading state */
+.btn-text {
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--spacing-2);
+}
+
+.btn-loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.login-btn.loading .btn-text {
+    opacity: 0;
+    transform: scale(0.8);
+}
+
+.login-btn.loading .btn-loading {
+    opacity: 1;
+}
+
+.loading-spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top: 3px solid var(--text-inverse);
+    border-radius: var(--radius-full);
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===========================================
+   ENHANCED FOOTER SECTION
+   =========================================== */
+
+.login-footer {
+    margin-top: var(--spacing-10);
+    text-align: center;
+    position: relative;
+}
+
+.login-footer::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+}
+
+.register-link {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.register-link-anchor {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    position: relative;
+    transition: all var(--transition-normal);
+}
+
+.register-link-anchor::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--gradient-accent);
+    transition: width var(--transition-normal);
+}
+
+.register-link-anchor:hover {
+    color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.register-link-anchor:hover::after {
+    width: 100%;
+}
+
+/* ===========================================
+   RESPONSIVE DESIGN - STARTUP LEVEL
+   =========================================== */
+
+/* Large desktop */
+@media (min-width: 1440px) {
+    .login-card {
+        max-width: 480px;
+        padding: var(--spacing-16);
+    }
+    
+    .brand-logo {
+        font-size: var(--font-size-5xl);
+    }
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .bg-decoration {
+        opacity: 0.7;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-container {
+        padding: var(--spacing-4);
+    }
+    
+    .login-card {
+        padding: var(--spacing-8);
+        max-width: 100%;
+        margin: var(--spacing-4);
+    }
+    
+    .brand-logo {
+        font-size: var(--font-size-3xl);
+    }
+    
+    .bg-decoration-1,
+    .bg-decoration-2 {
+        opacity: 0.3;
+    }
+    
+    .bg-decoration-3,
+    .bg-decoration-4 {
+        display: none;
+    }
+}
+
+/* Mobile styles - Premium experience maintained */
+@media (max-width: 480px) {
+    .login-container {
+        padding: var(--spacing-3);
+        min-height: 100vh;
+        align-items: flex-start;
+        padding-top: var(--spacing-8);
+    }
+    
+    .login-card {
+        padding: var(--spacing-6);
+        border-radius: var(--radius-2xl);
+        margin: 0;
+        width: 100%;
+    }
+    
+    .login-header {
+        margin-bottom: var(--spacing-8);
+    }
+    
+    .brand-logo {
+        font-size: var(--font-size-2xl);
+    }
+    
+    .login-subtitle {
+        font-size: var(--font-size-base);
+    }
+    
+    .form-input {
+        padding: var(--spacing-4);
+        font-size: var(--font-size-base);
+    }
+    
+    .login-btn {
+        padding: var(--spacing-4) var(--spacing-5);
+        font-size: var(--font-size-base);
+        min-height: 52px;
+    }
+    
+    .bg-decoration {
+        display: none;
+    }
+}
+
+/* ===========================================
+   ACCESSIBILITY ENHANCEMENTS
+   =========================================== */
+
+/* Enhanced focus visible for keyboard navigation */
+.login-btn:focus-visible,
+.register-link-anchor:focus-visible,
+.form-input:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    .bg-decoration,
+    .brand-logo {
+        animation: none;
+    }
+    
+    .login-card {
+        animation: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .form-input {
+        border-width: 3px;
+    }
+    
+    .login-btn {
+        border: 2px solid var(--primary-color);
+    }
+    
+    .login-card {
+        border-width: 2px;
+    }
+}
+
+/* Dark mode support (future-ready) */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+        --background-primary: rgba(15, 23, 42, 0.95);
+        --background-secondary: #0f172a;
+        --border-color: #334155;
+    }
+    
+    .login-card {
+        background: rgba(15, 23, 42, 0.95);
+        border-color: rgba(255, 255, 255, 0.1);
+    }
+    
+    .form-input {
+        background: rgba(30, 41, 59, 0.8);
+        color: var(--text-primary);
+    }
+}
+
+/* ===========================================
+   PREMIUM ANIMATIONS & EFFECTS
+   =========================================== */
+
+/* Hover effects for the entire card */
+.login-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-2xl), var(--shadow-glow);
+    transition: all var(--transition-slow);
+}
+
+/* Stagger animation for form elements */
+.input-group:nth-child(1) {
+    animation: slideInUp 0.6s ease-out 0.1s both;
+}
+
+.input-group:nth-child(2) {
+    animation: slideInUp 0.6s ease-out 0.2s both;
+}
+
+.login-btn {
+    animation: slideInUp 0.6s ease-out 0.3s both;
+}
+
+.login-footer {
+    animation: slideInUp 0.6s ease-out 0.4s both;
+}
+
+@keyframes slideInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Micro-interactions */
+.input-label {
+    transition: all var(--transition-fast);
+}
+
+.form-input:focus + .input-label,
+.form-input:not(:placeholder-shown) + .input-label {
+    color: var(--primary-color);
+    transform: scale(0.95);
+}
+
+/* Success state animations (for future use) */
+.form-input.success {
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* Loading state for the entire form */
+.login-form.submitting {
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.login-form.submitting .form-input {
+    background: rgba(248, 250, 252, 0.5);
+}
