@@ -391,7 +391,7 @@ body::before {
 }
 
 /* ===========================================
-   PREMIUM INPUT FIELDS - FIXED VISIBILITY
+   PREMIUM INPUT FIELDS - BLACK TEXT FIX
    =========================================== */
 
 .form-input {
@@ -402,24 +402,26 @@ body::before {
     font-size: var(--font-size-base);
     font-family: var(--font-family);
     font-weight: 500;
-    /* FIXED: Remove backdrop-filter and use solid background */
-    background: #ffffff;
-    color: var(--text-primary);
+    background-color: #ffffff !important;
+    /* FIXED: Force black text color */
+    color: #000000 !important;
     transition: all var(--transition-normal);
     outline: none;
     position: relative;
 }
 
 .form-input::placeholder {
-    color: var(--text-muted);
+    /* FIXED: Ensure placeholder is visible but lighter */
+    color: #9ca3af !important;
     font-weight: 400;
 }
 
-/* Advanced input focus state with multiple effects */
+/* Focus state - FIXED */
 .form-input:focus {
     border-color: var(--border-focus);
-    /* FIXED: Use solid background instead of transparent */
-    background: #ffffff;
+    background-color: #ffffff !important;
+    /* FIXED: Keep text black on focus */
+    color: #000000 !important;
     box-shadow: 
         0 0 0 4px rgba(99, 102, 241, 0.1),
         var(--shadow-lg);
@@ -427,18 +429,28 @@ body::before {
 }
 
 .form-input:focus::placeholder {
-    color: transparent;
+    color: #9ca3af !important;
+    opacity: 0.7;
 }
 
-/* Input error state with enhanced styling */
+/* Error state - FIXED */
 .form-input.error {
     border-color: var(--error-color);
-    /* FIXED: Use solid background for error state */
-    background: #fef2f2;
+    background-color: #fef2f2 !important;
+    /* FIXED: Keep text black even in error state */
+    color: #000000 !important;
     box-shadow: 
         0 0 0 4px rgba(239, 68, 68, 0.1),
         var(--shadow-md);
     animation: shake 0.5s ease-in-out;
+}
+
+/* FIXED: All input states have black text */
+.form-input:active,
+.form-input:hover,
+.form-input:valid,
+.form-input:invalid {
+    color: #000000 !important;
 }
 
 @keyframes shake {
