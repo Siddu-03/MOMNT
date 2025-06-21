@@ -391,7 +391,7 @@ body::before {
 }
 
 /* ===========================================
-   PREMIUM INPUT FIELDS
+   PREMIUM INPUT FIELDS - FIXED VISIBILITY
    =========================================== */
 
 .form-input {
@@ -402,8 +402,8 @@ body::before {
     font-size: var(--font-size-base);
     font-family: var(--font-family);
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.8);
-    backdrop-filter: blur(10px);
+    /* FIXED: Remove backdrop-filter and use solid background */
+    background: #ffffff;
     color: var(--text-primary);
     transition: all var(--transition-normal);
     outline: none;
@@ -418,7 +418,8 @@ body::before {
 /* Advanced input focus state with multiple effects */
 .form-input:focus {
     border-color: var(--border-focus);
-    background: rgba(255, 255, 255, 0.95);
+    /* FIXED: Use solid background instead of transparent */
+    background: #ffffff;
     box-shadow: 
         0 0 0 4px rgba(99, 102, 241, 0.1),
         var(--shadow-lg);
@@ -432,7 +433,8 @@ body::before {
 /* Input error state with enhanced styling */
 .form-input.error {
     border-color: var(--error-color);
-    background: rgba(254, 242, 242, 0.8);
+    /* FIXED: Use solid background for error state */
+    background: #fef2f2;
     box-shadow: 
         0 0 0 4px rgba(239, 68, 68, 0.1),
         var(--shadow-md);
@@ -858,4 +860,45 @@ body::before {
 
 .login-form.submitting .form-input {
     background: rgba(248, 250, 252, 0.5);
+}
+/* ===========================================
+   PASSWORD TOGGLE FUNCTIONALITY - NEW
+   =========================================== */
+
+.password-input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.password-toggle {
+    position: absolute;
+    right: var(--spacing-4);
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-2);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    z-index: 10;
+}
+
+.password-toggle:hover {
+    color: var(--primary-color);
+    background: rgba(99, 102, 241, 0.1);
+}
+
+.password-toggle:focus {
+    outline: 2px solid var(--primary-color);
+    outline-offset: 2px;
+}
+
+/* Adjust padding for password input to make room for toggle */
+.form-input[type="password"],
+.form-input[type="text"].password-field {
+    padding-right: calc(var(--spacing-5) + 40px);
 }

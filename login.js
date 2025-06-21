@@ -165,7 +165,7 @@ function simulateLogin(successCallback) {
 function redirectToCreateEvent() {
     // Add a small delay for better UX
     setTimeout(() => {
-        window.location.href = 'create-event.html';
+        window.location.href = 'host-dashboard.html';
     }, 300);
 }
 
@@ -230,10 +230,13 @@ passwordInput.addEventListener('keypress', function(event) {
 // ===========================================
 
 /**
- * Initialize the login page
+ * Initialize the login page - UPDATED
  * Set up any necessary initial state
  */
 function initializeLoginPage() {
+    // Create password toggle functionality
+    createPasswordToggle();
+    
     // Focus on email input when page loads
     emailInput.focus();
     
@@ -344,4 +347,51 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
             console.log('Test credentials filled');
         }
     });
+}
+// ===========================================
+// PASSWORD TOGGLE FUNCTIONALITY - NEW
+// ===========================================
+
+/**
+ * Creates and inserts password toggle button
+ */
+function createPasswordToggle() {
+    // Create container for password input and toggle
+    const passwordContainer = document.createElement('div');
+    passwordContainer.className = 'password-input-container';
+    
+    // Create toggle button
+    const toggleButton = document.createElement('button');
+    toggleButton.type = 'button';
+    toggleButton.className = 'password-toggle';
+    toggleButton.innerHTML = '👁️';
+    toggleButton.setAttribute('aria-label', 'Toggle password visibility');
+    toggleButton.id = 'passwordToggle';
+    
+    // Wrap password input in container
+    passwordInput.parentNode.insertBefore(passwordContainer, passwordInput);
+    passwordContainer.appendChild(passwordInput);
+    passwordContainer.appendChild(toggleButton);
+    
+    // Add event listener for toggle
+    toggleButton.addEventListener('click', togglePasswordVisibility);
+}
+
+/**
+ * Toggles password visibility
+ */
+function togglePasswordVisibility() {
+    const toggleButton = document.getElementById('passwordToggle');
+    
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        passwordInput.classList.add('password-field');
+        toggleButton.innerHTML = '🙈';
+        toggleButton.setAttribute('aria-label', 'Hide password');
+    } else {
+        passwordInput.type = 'password';
+        passwordInput.classList.remove('password-field');
+        toggleButton.innerHTML = '👁️';
+        toggleButton.setAttribute('aria-label', 'Show password');
+    }
 }
