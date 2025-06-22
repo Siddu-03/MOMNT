@@ -18,6 +18,7 @@
             </div>
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="upload.html" class="nav-link active">Upload</a>
             </div>
         </div>
@@ -26,108 +27,184 @@
     <!-- Upload Section -->
     <section class="upload-section">
         <div class="container">
-            <div class="upload-container">
-                <div class="upload-header">
-                    <h1>Upload Your Photos</h1>
-                    <p>Scan the QR code or enter the event code to start uploading</p>
-                </div>
+            <div class="upload-header">
+                <h1>Upload Photos</h1>
+                <p>Share your moments with the event</p>
+            </div>
 
-                <!-- QR Scanner Section -->
-                <div class="qr-section">
-                    <div class="qr-container">
-                        <div class="qr-scanner">
-                            <div class="scanner-frame">
-                                <div class="scanner-corner top-left"></div>
-                                <div class="scanner-corner top-right"></div>
-                                <div class="scanner-corner bottom-left"></div>
-                                <div class="scanner-corner bottom-right"></div>
-                                <div class="scanner-line"></div>
-                            </div>
-                            <video id="qr-video" autoplay muted></video>
-                            <canvas id="qr-canvas" style="display: none;"></canvas>
-                        </div>
-                        <div class="qr-controls">
-                            <button id="start-scan" class="btn btn-primary">Start Camera</button>
-                            <button id="stop-scan" class="btn btn-secondary" style="display: none;">Stop Camera</button>
+            <!-- QR Scanner Section -->
+            <div class="qr-section">
+                <div class="qr-container">
+                    <h2>Scan Event QR Code</h2>
+                    <p>Point your camera at the event QR code to start uploading photos</p>
+                    
+                    <div class="qr-scanner">
+                        <video id="qrVideo" autoplay muted></video>
+                        <canvas id="qrCanvas" style="display: none;"></canvas>
+                        <div class="scanner-overlay">
+                            <div class="scanner-frame"></div>
+                            <div class="scanner-line"></div>
                         </div>
                     </div>
-                </div>
-
-                <!-- Manual Entry Section -->
-                <div class="manual-entry">
-                    <div class="divider">
-                        <span>or</span>
+                    
+                    <div class="qr-controls">
+                        <button class="btn btn-primary interactive" id="startScannerBtn">
+                            <span>📷</span> Start Scanner
+                        </button>
+                        <button class="btn btn-secondary interactive" id="stopScannerBtn" style="display: none;">
+                            <span>⏹️</span> Stop Scanner
+                        </button>
+                        <button class="btn btn-secondary interactive" id="switchCameraBtn">
+                            <span>🔄</span> Switch Camera
+                        </button>
                     </div>
-                    <div class="event-code-input">
-                        <input type="text" id="event-code" placeholder="Enter event code" maxlength="6">
-                        <button id="join-event" class="btn btn-primary">Join Event</button>
-                    </div>
-                </div>
-
-                <!-- Upload Form (Hidden initially) -->
-                <div id="upload-form" class="upload-form" style="display: none;">
-                    <div class="event-info">
-                        <h3 id="event-name">Event Name</h3>
-                        <p id="event-description">Event description will appear here</p>
-                    </div>
-
-                    <div class="upload-area">
-                        <div class="upload-zone" id="upload-zone">
-                            <div class="upload-icon">📸</div>
-                            <h3>Drop photos here or click to select</h3>
-                            <p>Supports JPG, PNG, GIF up to 10MB each</p>
-                            <input type="file" id="file-input" multiple accept="image/*" style="display: none;">
-                        </div>
-                    </div>
-
-                    <div class="upload-preview" id="upload-preview" style="display: none;">
-                        <h3>Selected Photos</h3>
-                        <div class="preview-grid" id="preview-grid"></div>
-                        <div class="upload-actions">
-                            <button id="upload-photos" class="btn btn-primary">Upload Photos</button>
-                            <button id="clear-selection" class="btn btn-secondary">Clear Selection</button>
-                        </div>
-                    </div>
-
-                    <div class="upload-progress" id="upload-progress" style="display: none;">
-                        <div class="progress-bar">
-                            <div class="progress-fill" id="progress-fill"></div>
-                        </div>
-                        <p id="progress-text">Uploading photos...</p>
-                    </div>
-
-                    <div class="upload-success" id="upload-success" style="display: none;">
-                        <div class="success-icon">✅</div>
-                        <h3>Photos uploaded successfully!</h3>
-                        <p>Your photos are now live in the event gallery</p>
-                        <button id="upload-more" class="btn btn-primary">Upload More Photos</button>
+                    
+                    <div class="qr-status" id="qrStatus">
+                        <p>Ready to scan QR code</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Manual Event Entry -->
+            <div class="manual-entry">
+                <h3>Or Enter Event Code Manually</h3>
+                <div class="event-code-input">
+                    <input type="text" id="eventCode" class="form-input" placeholder="Enter event code" maxlength="8">
+                    <button class="btn btn-primary interactive" id="joinEventBtn">
+                        <span>🎯</span> Join Event
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upload Section (Hidden until event is joined) -->
+            <div class="upload-container" id="uploadContainer" style="display: none;">
+                <div class="event-info">
+                    <h2 id="eventName">Event Name</h2>
+                    <p id="eventDescription">Event description</p>
+                    <div class="event-stats">
+                        <span class="stat">
+                            <span class="stat-number" id="totalPhotos">0</span>
+                            <span class="stat-label">Photos</span>
+                        </span>
+                        <span class="stat">
+                            <span class="stat-number" id="totalUploads">0</span>
+                            <span class="stat-label">Uploads</span>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Upload Area -->
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-zone">
+                        <div class="upload-icon">📸</div>
+                        <h3>Drop photos here or click to browse</h3>
+                        <p>Supports JPG, PNG, GIF up to 10MB each</p>
+                        <input type="file" id="fileInput" multiple accept="image/*" style="display: none;">
+                        <button class="btn btn-primary interactive" id="browseBtn">
+                            <span>📁</span> Browse Files
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upload Progress -->
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <h3>Uploading Photos</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <p id="progressText">0 of 0 photos uploaded</p>
+                </div>
+
+                <!-- Photo Preview -->
+                <div class="photo-preview" id="photoPreview" style="display: none;">
+                    <h3>Selected Photos</h3>
+                    <div class="preview-grid" id="previewGrid">
+                        <!-- Photo previews will be added here -->
+                    </div>
+                    <div class="preview-actions">
+                        <button class="btn btn-secondary interactive" id="clearSelectionBtn">
+                            <span>🗑️</span> Clear Selection
+                        </button>
+                        <button class="btn btn-primary interactive" id="uploadPhotosBtn">
+                            <span>📤</span> Upload Photos
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Upload Success -->
+                <div class="upload-success" id="uploadSuccess" style="display: none;">
+                    <div class="success-icon">✅</div>
+                    <h3>Upload Successful!</h3>
+                    <p id="uploadSuccessText">Your photos have been uploaded to the event</p>
+                    <div class="success-actions">
+                        <button class="btn btn-primary interactive" id="uploadMoreBtn">
+                            <span>📸</span> Upload More Photos
+                        </button>
+                        <button class="btn btn-secondary interactive" id="viewGalleryBtn">
+                            <span>🖼️</span> View Gallery
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Preview -->
+            <div class="gallery-preview" id="galleryPreview" style="display: none;">
+                <h3>Recent Event Photos</h3>
+                <div class="gallery-grid" id="galleryGrid">
+                    <!-- Recent photos will be loaded here -->
+                </div>
+                <button class="btn btn-primary interactive" id="loadMoreBtn">
+                    <span>📄</span> Load More Photos
+                </button>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>MOMNT</h3>
-                    <p>Live event photo albums</p>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="upload.html">Upload</a>
-                </div>
+    <!-- Photo Viewer Modal -->
+    <div class="modal" id="photoViewerModal">
+        <div class="modal-content photo-viewer">
+            <div class="modal-header">
+                <h3>Photo Preview</h3>
+                <button class="modal-close interactive" id="closePhotoViewer">&times;</button>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 MOMNT. All rights reserved.</p>
+            <div class="photo-viewer-content">
+                <img id="photoViewerImage" src="" alt="Photo preview">
+                <div class="photo-info">
+                    <p><strong>File:</strong> <span id="photoFileName"></span></p>
+                    <p><strong>Size:</strong> <span id="photoFileSize"></span></p>
+                    <p><strong>Type:</strong> <span id="photoFileType"></span></p>
+                </div>
             </div>
         </div>
-    </footer>
+    </div>
+
+    <!-- Error Modal -->
+    <div class="modal" id="errorModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Error</h3>
+                <button class="modal-close interactive" id="closeErrorModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="errorMessage">An error occurred</p>
+            </div>
+            <div class="modal-actions">
+                <button class="btn btn-primary interactive" id="errorModalOk">OK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p id="loadingText">Processing...</p>
+        </div>
+    </div>
 
     <script src="../js/main.js"></script>
     <script src="../js/qr.js"></script>
     <script src="../js/upload.js"></script>
 </body>
+</html> 
 </html> 

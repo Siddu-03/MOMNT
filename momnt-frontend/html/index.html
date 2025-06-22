@@ -3,62 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MOMNT - Live Event Photo Album</title>
+    <title>MOMNT - Live Event Photo Albums</title>
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/animations.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="page-transition">
+    <div class="animated-bg"></div>
+    <canvas id="mainParticles" class="particles-bg"></canvas>
+    
+    <!-- Floating Wave Elements -->
+    <div class="floating-waves">
+        <div class="wave-element wave-1"></div>
+        <div class="wave-element wave-2"></div>
+        <div class="wave-element wave-3"></div>
+        <div class="wave-element wave-4"></div>
+        <div class="wave-element wave-5"></div>
+    </div>
+    
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <h1>MOMNT</h1>
+                <h1 class="neon-glow">MOMNT</h1>
             </div>
             <div class="nav-links">
-                <a href="index.html" class="nav-link active">Home</a>
-                <a href="login.html" class="nav-link">Login</a>
-                <a href="register.html" class="nav-link">Register</a>
+                <a href="index.html" class="nav-link neon-glow active" data-tilt>Home</a>
+                <a href="login.html" class="nav-link neon-glow" data-tilt>Login</a>
+                <a href="register.html" class="nav-link neon-glow" data-tilt>Register</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    <span class="gradient-text">Capture</span> Every Moment
-                </h1>
-                <p class="hero-subtitle">
-                    Create live photo albums for your events. Let guests upload photos instantly via QR codes.
-                </p>
-                <div class="hero-buttons">
-                    <a href="register.html" class="btn btn-primary">Create Event</a>
-                    <a href="upload.html" class="btn btn-secondary">Upload Photos</a>
+    <section class="hero" data-animate>
+        <div class="container">
+            <div class="hero-container">
+                <div class="hero-content">
+                    <h1 class="hero-title glitch">
+                        Capture Every <span class="gradient-text">Moment</span>
+                    </h1>
+                    <p class="hero-subtitle">
+                        Create live event photo albums that bring people together. 
+                        Share memories instantly with QR codes and real-time uploads.
+                    </p>
+                    <div class="hero-buttons">
+                        <a href="register.html" class="btn btn-primary btn-large interactive neon-glow" data-tilt>
+                            <span>🚀</span> Get Started
+                        </a>
+                        <a href="upload.html" class="btn btn-secondary btn-large interactive neon-glow" data-tilt>
+                            <span>📸</span> Upload Photos
+                        </a>
+                    </div>
                 </div>
-            </div>
-            <div class="hero-visual">
+                
                 <div class="floating-cards">
-                    <div class="card card-1">
+                    <div class="card card-1 neon-glow" data-tilt>
                         <div class="card-content">
                             <div class="card-icon">📸</div>
-                            <h3>Instant Upload</h3>
-                            <p>Scan QR code and upload photos instantly</p>
+                            <h3>Instant Uploads</h3>
+                            <p>Share photos in real-time during events</p>
                         </div>
                     </div>
-                    <div class="card card-2">
+                    <div class="card card-2 neon-glow" data-tilt>
+                        <div class="card-content">
+                            <div class="card-icon">🔗</div>
+                            <h3>QR Code Access</h3>
+                            <p>Easy sharing with simple QR codes</p>
+                        </div>
+                    </div>
+                    <div class="card card-3 neon-glow" data-tilt>
                         <div class="card-content">
                             <div class="card-icon">🎉</div>
                             <h3>Live Gallery</h3>
-                            <p>See photos appear in real-time</p>
-                        </div>
-                    </div>
-                    <div class="card card-3">
-                        <div class="card-content">
-                            <div class="card-icon">🔗</div>
-                            <h3>Easy Sharing</h3>
-                            <p>Share your event album with everyone</p>
+                            <p>Watch memories build in real-time</p>
                         </div>
                     </div>
                 </div>
@@ -67,35 +85,102 @@
     </section>
 
     <!-- Features Section -->
-    <section class="features">
+    <section class="features" data-animate>
         <div class="container">
-            <h2 class="section-title">How It Works</h2>
+            <h2 class="section-title glitch">Why Choose MOMNT?</h2>
             <div class="features-grid">
-                <div class="feature-item">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Create Event</h3>
-                    <p>Set up your event and get a unique QR code for guests to scan.</p>
+                <div class="feature-item interactive neon-glow" data-tilt>
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Upload photos instantly with our optimized system. No waiting, no delays - just pure speed.</p>
                 </div>
-                <div class="feature-item">
+                
+                <div class="feature-item interactive neon-glow" data-tilt>
+                    <div class="feature-icon">🔒</div>
+                    <h3>Secure & Private</h3>
+                    <p>Your photos are protected with enterprise-grade security. Only event participants can access the gallery.</p>
+                </div>
+                
+                <div class="feature-item interactive neon-glow" data-tilt>
                     <div class="feature-icon">📱</div>
-                    <h3>Scan & Upload</h3>
-                    <p>Guests scan the QR code and upload photos directly from their phones.</p>
+                    <h3>Mobile First</h3>
+                    <p>Designed for mobile devices. Upload photos directly from your phone with our intuitive interface.</p>
                 </div>
-                <div class="feature-item">
-                    <div class="feature-icon">✨</div>
-                    <h3>Live Gallery</h3>
-                    <p>Watch as photos appear in your live gallery in real-time.</p>
+                
+                <div class="feature-item interactive neon-glow" data-tilt>
+                    <div class="feature-icon">🎨</div>
+                    <h3>Beautiful Galleries</h3>
+                    <p>Stunning photo galleries that showcase your memories in the best possible way.</p>
+                </div>
+                
+                <div class="feature-item interactive neon-glow" data-tilt>
+                    <div class="feature-icon">🌐</div>
+                    <h3>Works Everywhere</h3>
+                    <p>No app downloads required. Works on any device with a web browser and camera.</p>
+                </div>
+                
+                <div class="feature-item interactive neon-glow" data-tilt>
+                    <div class="feature-icon">📊</div>
+                    <h3>Real-time Stats</h3>
+                    <p>Track uploads, views, and engagement in real-time. Know exactly how your event is performing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" data-animate>
+        <div class="container">
+            <h2 class="section-title glitch">How It Works</h2>
+            <div class="steps-container">
+                <div class="step interactive neon-glow" data-tilt>
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Create Event</h3>
+                        <p>Set up your event in seconds. Add details, location, and description.</p>
+                    </div>
+                </div>
+                
+                <div class="step interactive neon-glow" data-tilt>
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Share QR Code</h3>
+                        <p>Share the unique QR code with your guests. They can scan it to join the event.</p>
+                    </div>
+                </div>
+                
+                <div class="step interactive neon-glow" data-tilt>
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Upload Photos</h3>
+                        <p>Guests upload photos directly from their phones. No app installation required.</p>
+                    </div>
+                </div>
+                
+                <div class="step interactive neon-glow" data-tilt>
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Enjoy Memories</h3>
+                        <p>Watch your event gallery grow in real-time. All photos are instantly available.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- CTA Section -->
-    <section class="cta">
+    <section class="cta" data-animate>
         <div class="container">
-            <h2>Ready to Create Your First Event?</h2>
-            <p>Join thousands of event organizers using MOMNT</p>
-            <a href="register.html" class="btn btn-primary btn-large">Get Started Free</a>
+            <h2 class="glitch">Ready to Create Amazing Event Memories?</h2>
+            <p>Join thousands of event organizers who trust MOMNT for their photo sharing needs</p>
+            <div class="cta-buttons">
+                <a href="register.html" class="btn btn-primary btn-large interactive neon-glow" data-tilt>
+                    <span>🎯</span> Start Your First Event
+                </a>
+                <a href="login.html" class="btn btn-secondary btn-large interactive neon-glow" data-tilt>
+                    <span>🔑</span> Sign In
+                </a>
+            </div>
         </div>
     </section>
 
@@ -104,17 +189,18 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-logo">
-                    <h3>MOMNT</h3>
-                    <p>Live event photo albums</p>
+                    <h3 class="neon-glow">MOMNT</h3>
+                    <p>Live event photo albums that bring people together</p>
                 </div>
                 <div class="footer-links">
-                    <a href="login.html">Login</a>
-                    <a href="register.html">Register</a>
-                    <a href="upload.html">Upload</a>
+                    <a href="index.html" class="interactive neon-glow" data-tilt>Home</a>
+                    <a href="login.html" class="interactive neon-glow" data-tilt>Login</a>
+                    <a href="register.html" class="interactive neon-glow" data-tilt>Register</a>
+                    <a href="upload.html" class="interactive neon-glow" data-tilt>Upload</a>
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2024 MOMNT. All rights reserved.</p>
+                <p>&copy; 2024 MOMNT. All rights reserved. Made with ❤️ for amazing events.</p>
             </div>
         </div>
     </footer>

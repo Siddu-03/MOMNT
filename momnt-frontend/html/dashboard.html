@@ -19,7 +19,8 @@
             <div class="nav-links">
                 <a href="index.html" class="nav-link">Home</a>
                 <a href="dashboard.html" class="nav-link active">Dashboard</a>
-                <a href="#" class="nav-link" id="logout-btn">Logout</a>
+                <a href="upload.html" class="nav-link">Upload</a>
+                <button class="btn btn-secondary interactive" id="logoutBtn">Logout</button>
             </div>
         </div>
     </nav>
@@ -29,142 +30,164 @@
         <div class="container">
             <div class="dashboard-header">
                 <h1>Event Dashboard</h1>
-                <button id="create-event-btn" class="btn btn-primary">Create New Event</button>
+                <p>Manage your events and view uploaded photos</p>
+                <button class="btn btn-primary interactive" id="createEventBtn">
+                    <span>➕</span> Create New Event
+                </button>
             </div>
 
-            <!-- Events List -->
-            <div class="events-section">
-                <h2>Your Events</h2>
-                <div class="events-grid" id="events-grid">
-                    <!-- Events will be populated by JavaScript -->
+            <!-- Event Creation Modal -->
+            <div class="modal" id="eventModal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Create New Event</h2>
+                        <button class="modal-close interactive" id="closeEventModal">&times;</button>
+                    </div>
+                    <form id="eventForm">
+                        <div class="form-group">
+                            <label for="eventName" class="form-label">Event Name</label>
+                            <input type="text" id="eventName" name="eventName" class="form-input" placeholder="Enter event name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDate" class="form-label">Event Date</label>
+                            <input type="date" id="eventDate" name="eventDate" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventLocation" class="form-label">Location</label>
+                            <input type="text" id="eventLocation" name="eventLocation" class="form-input" placeholder="Enter event location">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDescription" class="form-label">Description</label>
+                            <textarea id="eventDescription" name="eventDescription" class="form-input" rows="3" placeholder="Describe your event"></textarea>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary interactive" id="cancelEvent">Cancel</button>
+                            <button type="submit" class="btn btn-primary interactive">Create Event</button>
+                        </div>
+                    </form>
                 </div>
             </div>
 
-            <!-- Active Event Dashboard -->
-            <div id="active-event-dashboard" class="active-event-dashboard" style="display: none;">
-                <div class="event-header">
-                    <div class="event-info">
-                        <h2 id="current-event-name">Event Name</h2>
-                        <p id="current-event-description">Event description</p>
-                        <div class="event-stats">
-                            <div class="stat">
-                                <span class="stat-number" id="total-photos">0</span>
-                                <span class="stat-label">Photos</span>
+            <!-- Events Grid -->
+            <div class="events-grid" id="eventsGrid">
+                <!-- Events will be dynamically loaded here -->
+            </div>
+
+            <!-- Event Details Modal -->
+            <div class="modal" id="eventDetailsModal">
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h2 id="eventDetailsTitle">Event Details</h2>
+                        <button class="modal-close interactive" id="closeEventDetailsModal">&times;</button>
+                    </div>
+                    <div class="event-details">
+                        <div class="event-info">
+                            <div class="info-item">
+                                <span class="info-label">Date:</span>
+                                <span class="info-value" id="eventDetailsDate"></span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-number" id="total-uploads">0</span>
-                                <span class="stat-label">Uploads</span>
+                            <div class="info-item">
+                                <span class="info-label">Location:</span>
+                                <span class="info-value" id="eventDetailsLocation"></span>
                             </div>
-                            <div class="stat">
-                                <span class="stat-number" id="active-users">0</span>
-                                <span class="stat-label">Active Users</span>
+                            <div class="info-item">
+                                <span class="info-label">Description:</span>
+                                <span class="info-value" id="eventDetailsDescription"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">QR Code:</span>
+                                <div class="qr-code" id="eventQRCode"></div>
                             </div>
                         </div>
-                    </div>
-                    <div class="event-actions">
-                        <button id="share-event" class="btn btn-secondary">Share Event</button>
-                        <button id="download-qr" class="btn btn-primary">Download QR Code</button>
-                        <button id="close-event" class="btn btn-danger">Close Event</button>
-                    </div>
-                </div>
-
-                <!-- QR Code Display -->
-                <div class="qr-display">
-                    <h3>Event QR Code</h3>
-                    <div class="qr-code-container">
-                        <div id="qr-code" class="qr-code"></div>
-                        <p class="qr-instructions">Guests can scan this QR code to upload photos</p>
-                    </div>
-                </div>
-
-                <!-- Live Gallery -->
-                <div class="gallery-section">
-                    <div class="gallery-header">
-                        <h3>Live Photo Gallery</h3>
-                        <div class="gallery-controls">
-                            <button id="refresh-gallery" class="btn btn-secondary">Refresh</button>
-                            <button id="download-all" class="btn btn-primary">Download All</button>
+                        
+                        <div class="event-actions">
+                            <button class="btn btn-primary interactive" id="shareEventBtn">
+                                <span>📤</span> Share Event
+                            </button>
+                            <button class="btn btn-secondary interactive" id="editEventBtn">
+                                <span>✏️</span> Edit Event
+                            </button>
+                            <button class="btn btn-danger interactive" id="deleteEventBtn">
+                                <span>🗑️</span> Delete Event
+                            </button>
                         </div>
                     </div>
-                    <div class="gallery-grid" id="gallery-grid">
-                        <!-- Photos will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Photo Gallery Modal -->
+            <div class="modal" id="galleryModal">
+                <div class="modal-content large">
+                    <div class="modal-header">
+                        <h2 id="galleryTitle">Event Photos</h2>
+                        <button class="modal-close interactive" id="closeGalleryModal">&times;</button>
+                    </div>
+                    <div class="gallery-container">
+                        <div class="gallery-filters">
+                            <button class="filter-btn active interactive" data-filter="all">All Photos</button>
+                            <button class="filter-btn interactive" data-filter="recent">Recent</button>
+                            <button class="filter-btn interactive" data-filter="popular">Popular</button>
+                        </div>
+                        <div class="gallery-grid" id="galleryGrid">
+                            <!-- Photos will be dynamically loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Photo Viewer Modal -->
+            <div class="modal" id="photoViewerModal">
+                <div class="modal-content photo-viewer">
+                    <div class="modal-header">
+                        <h3 id="photoViewerTitle">Photo Details</h3>
+                        <button class="modal-close interactive" id="closePhotoViewerModal">&times;</button>
+                    </div>
+                    <div class="photo-viewer-content">
+                        <div class="photo-container">
+                            <img id="photoViewerImage" src="" alt="Event photo">
+                        </div>
+                        <div class="photo-info">
+                            <div class="info-item">
+                                <span class="info-label">Uploaded by:</span>
+                                <span class="info-value" id="photoUploader"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Date:</span>
+                                <span class="info-value" id="photoDate"></span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Size:</span>
+                                <span class="info-value" id="photoSize"></span>
+                            </div>
+                        </div>
+                        <div class="photo-actions">
+                            <button class="btn btn-primary interactive" id="downloadPhotoBtn">
+                                <span>⬇️</span> Download
+                            </button>
+                            <button class="btn btn-secondary interactive" id="sharePhotoBtn">
+                                <span>📤</span> Share
+                            </button>
+                            <button class="btn btn-danger interactive" id="deletePhotoBtn">
+                                <span>🗑️</span> Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Create Event Modal -->
-    <div id="create-event-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Create New Event</h2>
-                <button class="modal-close" id="close-modal">&times;</button>
-            </div>
-            <form id="create-event-form">
-                <div class="form-group">
-                    <label for="event-name">Event Name</label>
-                    <input type="text" id="event-name" name="eventName" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-description">Description</label>
-                    <textarea id="event-description" name="eventDescription" rows="3"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="event-date">Event Date</label>
-                    <input type="date" id="event-date" name="eventDate" required>
-                </div>
-                <div class="form-group">
-                    <label for="event-location">Location</label>
-                    <input type="text" id="event-location" name="eventLocation">
-                </div>
-                <div class="form-actions">
-                    <button type="button" id="cancel-create" class="btn btn-secondary">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Create Event</button>
-                </div>
-            </form>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner">
+            <div class="spinner"></div>
+            <p>Loading...</p>
         </div>
     </div>
-
-    <!-- Photo Modal -->
-    <div id="photo-modal" class="modal" style="display: none;">
-        <div class="modal-content photo-modal">
-            <div class="modal-header">
-                <h3 id="photo-title">Photo Details</h3>
-                <button class="modal-close" id="close-photo-modal">&times;</button>
-            </div>
-            <div class="photo-modal-content">
-                <img id="modal-photo" src="" alt="Photo">
-                <div class="photo-details">
-                    <p><strong>Uploaded by:</strong> <span id="photo-uploader">Guest</span></p>
-                    <p><strong>Uploaded at:</strong> <span id="photo-time">Time</span></p>
-                    <div class="photo-actions">
-                        <button id="download-photo" class="btn btn-primary">Download</button>
-                        <button id="delete-photo" class="btn btn-danger">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <h3>MOMNT</h3>
-                    <p>Live event photo albums</p>
-                </div>
-                <div class="footer-links">
-                    <a href="index.html">Home</a>
-                    <a href="dashboard.html">Dashboard</a>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2024 MOMNT. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
 
     <script src="../js/main.js"></script>
     <script src="../js/dashboard.js"></script>

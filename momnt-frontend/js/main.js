@@ -5,6 +5,157 @@
 let currentUser = null;
 let currentEvent = null;
 
+// Physics-based cursor system
+class PhysicsCursor {
+    constructor() {
+        this.cursor = null;
+        this.follower = null;
+        this.wave = null;
+        this.mouse = { x: 0, y: 0 };
+        this.followerPos = { x: 0, y: 0 };
+        this.velocity = { x: 0, y: 0 };
+        this.friction = 0.85;
+        this.spring = 0.1;
+        this.mass = 1;
+        this.isActive = false;
+        
+        this.init();
+    }
+    
+    init() {
+        // Create cursor elements
+        this.createCursorElements();
+        
+        // Add event listeners
+        this.addEventListeners();
+        
+        // Start animation loop
+        this.animate();
+    }
+    
+    createCursorElements() {
+        // Create main cursor
+        this.cursor = document.createElement('div');
+        this.cursor.className = 'cursor';
+        document.body.appendChild(this.cursor);
+        
+        // Create follower
+        this.follower = document.createElement('div');
+        this.follower.className = 'cursor-follower';
+        document.body.appendChild(this.follower);
+        
+        // Create wave effect
+        this.wave = document.createElement('div');
+        this.wave.className = 'cursor-wave';
+        document.body.appendChild(this.wave);
+    }
+    
+    addEventListeners() {
+        // Mouse move
+        document.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY;
+            this.isActive = true;
+        });
+        
+        // Mouse enter
+        document.addEventListener('mouseenter', () => {
+            this.isActive = true;
+        });
+        
+        // Mouse leave
+        document.addEventListener('mouseleave', () => {
+            this.isActive = false;
+        });
+        
+        // Click events for wave effect
+        document.addEventListener('click', (e) => {
+            this.createWave(e.clientX, e.clientY);
+        });
+        
+        // Interactive elements
+        document.addEventListener('mouseover', (e) => {
+            if (e.target.classList.contains('interactive') || 
+                e.target.closest('.interactive') ||
+                e.target.tagName === 'BUTTON' ||
+                e.target.tagName === 'A' ||
+                e.target.closest('button') ||
+                e.target.closest('a')) {
+                this.setInteractiveState(true);
+            }
+        });
+        
+        document.addEventListener('mouseout', (e) => {
+            if (!e.target.classList.contains('interactive') && 
+                !e.target.closest('.interactive') &&
+                e.target.tagName !== 'BUTTON' &&
+                e.target.tagName !== 'A' &&
+                !e.target.closest('button') &&
+                !e.target.closest('a')) {
+                this.setInteractiveState(false);
+            }
+        });
+    }
+    
+    setInteractiveState(isInteractive) {
+        if (isInteractive) {
+            this.cursor.style.transform = 'scale(1.5)';
+            this.follower.style.transform = 'scale(1.2)';
+            this.follower.style.background = 'radial-gradient(circle, rgba(99, 102, 241, 0.4) 0%, rgba(99, 102, 241, 0.2) 50%, transparent 100%)';
+            this.follower.style.borderColor = 'rgba(99, 102, 241, 0.6)';
+        } else {
+            this.cursor.style.transform = 'scale(1)';
+            this.follower.style.transform = 'scale(1)';
+            this.follower.style.background = 'radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, rgba(99, 102, 241, 0.1) 50%, transparent 100%)';
+            this.follower.style.borderColor = 'rgba(99, 102, 241, 0.3)';
+        }
+    }
+    
+    createWave(x, y) {
+        this.wave.style.left = x + 'px';
+        this.wave.style.top = y + 'px';
+        this.wave.classList.add('active');
+        
+        setTimeout(() => {
+            this.wave.classList.remove('active');
+        }, 600);
+    }
+    
+    animate() {
+        if (this.isActive) {
+            // Update follower position with physics
+            const dx = this.mouse.x - this.followerPos.x;
+            const dy = this.mouse.y - this.followerPos.y;
+            
+            // Apply spring force
+            this.velocity.x += dx * this.spring;
+            this.velocity.y += dy * this.spring;
+            
+            // Apply friction
+            this.velocity.x *= this.friction;
+            this.velocity.y *= this.friction;
+            
+            // Update position
+            this.followerPos.x += this.velocity.x;
+            this.followerPos.y += this.velocity.y;
+            
+            // Update cursor elements
+            this.cursor.style.left = this.mouse.x + 'px';
+            this.cursor.style.top = this.mouse.y + 'px';
+            
+            this.follower.style.left = this.followerPos.x + 'px';
+            this.follower.style.top = this.followerPos.y + 'px';
+        }
+        
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+// Initialize physics cursor on desktop
+if (window.innerWidth > 768) {
+    const physicsCursor = new PhysicsCursor();
+}
+
 // Utility functions
 const utils = {
     // Generate random ID
@@ -29,13 +180,22 @@ const utils = {
         });
     },
 
+    // Format file size
+    formatFileSize: (bytes) => {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    },
+
     // Validate email
     validateEmail: (email) => {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     },
 
-    // Validate password strength
+    // Validate password
     validatePassword: (password) => {
         const minLength = 8;
         const hasUpperCase = /[A-Z]/.test(password);
@@ -77,15 +237,20 @@ const utils = {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${type === 'success' ? '#10b981' : type === 'error' ? '#ef4444' : '#6366f1'};
+            background: ${type === 'success' ? 'rgba(16, 185, 129, 0.9)' : 
+                        type === 'error' ? 'rgba(239, 68, 68, 0.9)' : 
+                        type === 'warning' ? 'rgba(245, 158, 11, 0.9)' : 
+                        'rgba(99, 102, 241, 0.9)'};
             color: white;
             padding: 1rem 1.5rem;
             border-radius: 0.5rem;
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             z-index: 10000;
             transform: translateX(100%);
-            transition: transform 0.3s ease;
-            max-width: 300px;
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            max-width: 400px;
         `;
 
         document.body.appendChild(notification);
@@ -115,6 +280,60 @@ const utils = {
                 }, 300);
             }
         }, duration);
+    },
+
+    // Loading spinner
+    showLoading: (container, message = 'Loading...') => {
+        const loading = document.createElement('div');
+        loading.className = 'loading-spinner';
+        loading.innerHTML = `
+            <div class="spinner"></div>
+            <p class="loading-text">${message}</p>
+        `;
+        
+        loading.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            color: white;
+        `;
+        
+        const spinner = loading.querySelector('.spinner');
+        spinner.style.cssText = `
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        `;
+        
+        const text = loading.querySelector('.loading-text');
+        text.style.cssText = `
+            font-size: 1rem;
+            opacity: 0.9;
+        `;
+        
+        container.style.position = 'relative';
+        container.appendChild(loading);
+        
+        return loading;
+    },
+
+    hideLoading: (loading) => {
+        if (loading && loading.parentNode) {
+            loading.parentNode.removeChild(loading);
+        }
     },
 
     // Debounce function
@@ -175,7 +394,7 @@ const utils = {
 
     // API helpers
     api: {
-        baseURL: 'http://localhost:5000/api', // Change this to your backend URL
+        baseURL: 'https://api.momnt.com', // Replace with your actual API URL
 
         request: async (endpoint, options = {}) => {
             const url = `${utils.api.baseURL}${endpoint}`;
@@ -592,4 +811,96 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {
     initApp();
-} 
+}
+
+// --- Advanced Animations and Effects ---
+
+// 1. 3D Tilt/Parallax Effect for [data-tilt]
+function init3DTilt() {
+  const tiltElements = document.querySelectorAll('[data-tilt]');
+  tiltElements.forEach(el => {
+    el.addEventListener('mousemove', e => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const cx = rect.width / 2;
+      const cy = rect.height / 2;
+      const dx = (x - cx) / cx;
+      const dy = (y - cy) / cy;
+      el.style.transform = `perspective(800px) rotateY(${-dx * 12}deg) rotateX(${dy * 12}deg) scale(1.04)`;
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = '';
+    });
+  });
+}
+
+// 2. Glitch Text Animation
+function initGlitchText() {
+  document.querySelectorAll('.glitch').forEach(el => {
+    if (!el.hasAttribute('data-text')) {
+      el.setAttribute('data-text', el.textContent.trim());
+    }
+  });
+}
+
+// 3. Scroll-triggered Entrance Animations
+function initScrollAnimate() {
+  const observer = new window.IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('[data-animate]').forEach(el => {
+    observer.observe(el);
+  });
+}
+
+// 4. Animated Particles Background
+function initParticlesBG() {
+  const canvas = document.getElementById('mainParticles');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let w = window.innerWidth, h = window.innerHeight;
+  canvas.width = w; canvas.height = h;
+  let particles = Array.from({length: 64}, () => ({
+    x: Math.random() * w,
+    y: Math.random() * h,
+    r: 1.5 + Math.random() * 2.5,
+    dx: (Math.random() - 0.5) * 0.7,
+    dy: (Math.random() - 0.5) * 0.7,
+    hue: 200 + Math.random() * 100
+  }));
+  function draw() {
+    ctx.clearRect(0, 0, w, h);
+    for (let p of particles) {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, 2 * Math.PI);
+      ctx.shadowColor = `hsl(${p.hue}, 100%, 70%)`;
+      ctx.shadowBlur = 16;
+      ctx.fillStyle = `hsla(${p.hue}, 100%, 70%, 0.8)`;
+      ctx.fill();
+      ctx.restore();
+      p.x += p.dx; p.y += p.dy;
+      if (p.x < 0 || p.x > w) p.dx *= -1;
+      if (p.y < 0 || p.y > h) p.dy *= -1;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+  window.addEventListener('resize', () => {
+    w = window.innerWidth; h = window.innerHeight;
+    canvas.width = w; canvas.height = h;
+  });
+}
+
+// 5. Initialize all effects on DOMContentLoaded
+window.addEventListener('DOMContentLoaded', () => {
+  init3DTilt();
+  initGlitchText();
+  initScrollAnimate();
+  initParticlesBG();
+}); 
