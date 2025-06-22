@@ -1,0 +1,14 @@
+This directory is for storing MOMNT logo variations.
+
+Logo files should include:
+- MOMNT-logo-sharp.png (sharp/geometric version)
+- MOMNT-logo-rounded.png (rounded/soft version)
+- MOMNT-logo-white.png (white version for dark backgrounds)
+- MOMNT-logo-black.png (black version for light backgrounds)
+- MOMNT-favicon.ico (favicon for browser tabs)
+- MOMNT-logo.svg (vector version for scaling)
+
+Recommended sizes:
+- Main logo: 200x60px
+- Favicon: 32x32px
+- High-res: 400x120px for retina displays 

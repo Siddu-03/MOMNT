@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MOMNT</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/dashboard.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <h1>MOMNT</h1>
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="#" class="nav-link" id="logout-btn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard-section">
+        <div class="container">
+            <div class="dashboard-header">
+                <h1>Event Dashboard</h1>
+                <button id="create-event-btn" class="btn btn-primary">Create New Event</button>
+            </div>
+
+            <!-- Events List -->
+            <div class="events-section">
+                <h2>Your Events</h2>
+                <div class="events-grid" id="events-grid">
+                    <!-- Events will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Active Event Dashboard -->
+            <div id="active-event-dashboard" class="active-event-dashboard" style="display: none;">
+                <div class="event-header">
+                    <div class="event-info">
+                        <h2 id="current-event-name">Event Name</h2>
+                        <p id="current-event-description">Event description</p>
+                        <div class="event-stats">
+                            <div class="stat">
+                                <span class="stat-number" id="total-photos">0</span>
+                                <span class="stat-label">Photos</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number" id="total-uploads">0</span>
+                                <span class="stat-label">Uploads</span>
+                            </div>
+                            <div class="stat">
+                                <span class="stat-number" id="active-users">0</span>
+                                <span class="stat-label">Active Users</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event-actions">
+                        <button id="share-event" class="btn btn-secondary">Share Event</button>
+                        <button id="download-qr" class="btn btn-primary">Download QR Code</button>
+                        <button id="close-event" class="btn btn-danger">Close Event</button>
+                    </div>
+                </div>
+
+                <!-- QR Code Display -->
+                <div class="qr-display">
+                    <h3>Event QR Code</h3>
+                    <div class="qr-code-container">
+                        <div id="qr-code" class="qr-code"></div>
+                        <p class="qr-instructions">Guests can scan this QR code to upload photos</p>
+                    </div>
+                </div>
+
+                <!-- Live Gallery -->
+                <div class="gallery-section">
+                    <div class="gallery-header">
+                        <h3>Live Photo Gallery</h3>
+                        <div class="gallery-controls">
+                            <button id="refresh-gallery" class="btn btn-secondary">Refresh</button>
+                            <button id="download-all" class="btn btn-primary">Download All</button>
+                        </div>
+                    </div>
+                    <div class="gallery-grid" id="gallery-grid">
+                        <!-- Photos will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Event</h2>
+                <button class="modal-close" id="close-modal">&times;</button>
+            </div>
+            <form id="create-event-form">
+                <div class="form-group">
+                    <label for="event-name">Event Name</label>
+                    <input type="text" id="event-name" name="eventName" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-description">Description</label>
+                    <textarea id="event-description" name="eventDescription" rows="3"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="event-date">Event Date</label>
+                    <input type="date" id="event-date" name="eventDate" required>
+                </div>
+                <div class="form-group">
+                    <label for="event-location">Location</label>
+                    <input type="text" id="event-location" name="eventLocation">
+                </div>
+                <div class="form-actions">
+                    <button type="button" id="cancel-create" class="btn btn-secondary">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Create Event</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Photo Modal -->
+    <div id="photo-modal" class="modal" style="display: none;">
+        <div class="modal-content photo-modal">
+            <div class="modal-header">
+                <h3 id="photo-title">Photo Details</h3>
+                <button class="modal-close" id="close-photo-modal">&times;</button>
+            </div>
+            <div class="photo-modal-content">
+                <img id="modal-photo" src="" alt="Photo">
+                <div class="photo-details">
+                    <p><strong>Uploaded by:</strong> <span id="photo-uploader">Guest</span></p>
+                    <p><strong>Uploaded at:</strong> <span id="photo-time">Time</span></p>
+                    <div class="photo-actions">
+                        <button id="download-photo" class="btn btn-primary">Download</button>
+                        <button id="delete-photo" class="btn btn-danger">Delete</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h3>MOMNT</h3>
+                    <p>Live event photo albums</p>
+                </div>
+                <div class="footer-links">
+                    <a href="index.html">Home</a>
+                    <a href="dashboard.html">Dashboard</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MOMNT. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/dashboard.js"></script>
+</body>
+</html> 

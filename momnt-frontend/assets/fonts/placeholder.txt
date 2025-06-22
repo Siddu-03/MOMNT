@@ -1,0 +1,9 @@
+This directory is for storing custom fonts used in the MOMNT application.
+
+Currently using Google Fonts (Inter) for the main typography.
+Custom fonts can be added here if needed for:
+- Logo fonts
+- Special headings
+- Brand-specific typography
+
+To use custom fonts, add @font-face declarations in the CSS files. 

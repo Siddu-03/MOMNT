@@ -1,0 +1,10 @@
+This directory is for storing images and icons used in the MOMNT application.
+
+Placeholder images can be added here for:
+- Event photos
+- User avatars
+- Icons
+- Background images
+- Logo variations
+
+For production, consider using a CDN or cloud storage service for better performance. 
