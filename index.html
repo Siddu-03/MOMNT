@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="MOMNT - Collect precious moments from your events privately and elegantly">
+    <meta name="keywords" content="photo sharing, events, QR code, moments, wedding photos">
+    <meta name="author" content="MOMNT Team">
+    
+    <!-- Google Fonts - Inter for modern typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- QR Code library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    
+    <title>MOMNT - Moments. Collected.</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <div class="logo-icon">
+                    <i class="fas fa-camera-retro"></i>
+                </div>
+                <span class="brand-name">MOMNT</span>
+            </div>
+            
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#dashboard" class="nav-link" id="dashboardLink" style="display: none;">Dashboard</a>
+                <a href="#login" class="nav-link" id="loginLink">Login</a>
+                <a href="#register" class="nav-link" id="registerLink">Get Started</a>
+                <button class="nav-link logout-btn" id="logoutBtn" style="display: none;">Logout</button>
+            </div>
+            
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="hero">
+                <div class="hero-content">
+                    <div class="hero-badge">
+                        <span class="badge-text">✨ Privacy-First Photo Collection</span>
+                    </div>
+                    
+                    <h1 class="hero-title">
+                        <span class="title-line">Moments.</span>
+                        <span class="title-line accent">Collected.</span>
+                    </h1>
+                    
+                    <p class="hero-subtitle">
+                        Create unforgettable events where guests can share photos privately. 
+                        Scan, upload, and let the host curate the perfect collection of memories.
+                    </p>
+                    
+                    <div class="hero-actions">
+                        <button class="cta-primary" id="createEventBtn">
+                            <span class="btn-text">Create an Event</span>
+                            <i class="fas fa-arrow-right btn-icon"></i>
+                        </button>
+                        <button class="cta-secondary" id="demoBtn">
+                            <i class="fas fa-play"></i>
+                            <span>Watch Demo</span>
+                        </button>
+                    </div>
+                    
+                    <div class="trust-indicators">
+                        <div class="trust-item">
+                            <span class="trust-number">100%</span>
+                            <span class="trust-label">Private</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-number">0</span>
+                            <span class="trust-label">Setup Time</span>
+                        </div>
+                        <div class="trust-item">
+                            <span class="trust-number">∞</span>
+                            <span class="trust-label">Memories</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero-visual">
+                    <div class="phone-mockup">
+                        <div class="phone-screen">
+                            <div class="qr-code">
+                                <div class="qr-pattern"></div>
+                            </div>
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="floating-elements">
+                        <div class="float-item" style="--delay: 0s">📸</div>
+                        <div class="float-item" style="--delay: 1s">🎉</div>
+                        <div class="float-item" style="--delay: 2s">✨</div>
+                        <div class="float-item" style="--delay: 0.5s">🎊</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <h2>Host Login</h2>
+                    </div>
+                    
+                    <form id="loginForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="loginEmail">Email</label>
+                            <input type="email" id="loginEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">Password</label>
+                            <input type="password" id="loginPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-text">Login</span>
+                            <div class="spinner" style="display: none;"></div>
+                        </button>
+                    </form>
+                    
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="#register" class="link">Sign up</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+            <div class="auth-container">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <i class="fas fa-user-plus"></i>
+                        <h2>Host Sign Up</h2>
+                    </div>
+                    
+                    <form id="registerForm" class="auth-form">
+                        <div class="form-group">
+                            <label for="registerEmail">Email</label>
+                            <input type="email" id="registerEmail" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="registerPassword">Password</label>
+                            <input type="password" id="registerPassword" required minlength="6">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <input type="password" id="confirmPassword" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <span class="btn-text">Sign Up</span>
+                            <div class="spinner" style="display: none;"></div>
+                        </button>
+                    </form>
+                    
+                    <div class="auth-footer">
+                        <p>Already have an account? <a href="#login" class="link">Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard" class="section">
+            <div class="dashboard-container">
+                <div class="dashboard-header">
+                    <h1>Your Events</h1>
+                    <button class="btn-primary" id="createEventBtn2">
+                        <i class="fas fa-plus"></i>
+                        Create Event
+                    </button>
+                </div>
+                
+                <div class="create-event-form" id="createEventForm" style="display: none;">
+                    <h3>Create New Event</h3>
+                    <form id="eventForm">
+                        <div class="form-group">
+                            <label for="eventTitle">Event Title</label>
+                            <input type="text" id="eventTitle" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventDate">Date</label>
+                            <input type="date" id="eventDate" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="eventImage">Cover Image (Optional)</label>
+                            <input type="file" id="eventImage" accept="image/*">
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">Create Event</button>
+                    </form>
+                </div>
+                
+                <div class="events-grid" id="eventsGrid">
+                    <!-- Events will be populated here -->
+                </div>
+                
+                <div class="selected-event" id="selectedEvent" style="display: none;">
+                    <h2 id="selectedEventTitle"></h2>
+                    <div class="uploads-gallery" id="uploadsGallery">
+                        <!-- Uploads will be populated here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guest Upload Section -->
+        <section id="guestUpload" class="section">
+            <div class="upload-container">
+                <div class="upload-header">
+                    <h1>Upload Your Moment</h1>
+                    <p>Share your favorite photos for this event. JPG/PNG only. Max 5 at a time.</p>
+                </div>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="drop-zone" id="dropZone">
+                        <div class="drop-zone-content">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Drop photos here</h3>
+                            <p>or click to browse</p>
+                            <span class="file-info">JPG, PNG • Max 5 photos • Max 10MB each</span>
+                        </div>
+                        <input type="file" id="fileInput" multiple accept=".jpg,.jpeg,.png" style="display: none;">
+                    </div>
+                    
+                    <div class="preview-section" id="previewSection" style="display: none;">
+                        <h3>Selected Photos</h3>
+                        <div class="preview-grid" id="previewGrid"></div>
+                        <button class="btn-primary" id="uploadBtn">
+                            <span class="btn-text">Upload to MOMNT</span>
+                            <div class="spinner" style="display: none;"></div>
+                        </button>
+                        <div class="progress-bar" id="progressBar" style="display: none;">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="uploads-display" id="uploadsDisplay">
+                    <!-- Uploaded images will be shown here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Toast Notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" style="display: none;">
+        <div class="lightbox-content">
+            <button class="lightbox-close" id="lightboxClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <img id="lightboxImage" src="" alt="">
+            <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="lightbox-nav lightbox-next" id="lightboxNext">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html> 
