@@ -1,2 +1,0 @@
-# MOMNT
-Moments..Collected
